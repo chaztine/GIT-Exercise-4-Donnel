@@ -38,7 +38,7 @@ if ( ! isset( $content_width ) ) {
 if ( version_compare( $GLOBALS['wp_version'], '4.1-alpha', '<' ) ) {
 	require get_template_directory() . '/inc/back-compat.php';
 }
-if ( ! function_exists( 'twentyfifteen_setup' ) ) :
+if ( ! function_exists( 'edited' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -141,6 +141,7 @@ function custom_excerpt_length( $length ) {
     return 60;
 }
 add_filter( 'excerpt_length', 'orbitr_excerpt_length', 999 );
+
 /**
  * Register widget area.
  *
@@ -171,6 +172,12 @@ function myplugin_remove_admin_bar(){
 }
 add_filter( 'show_admin_bar' , 'myplugin_remove_admin_bar' );
 
+=======
+
+add_action( 'widgets_init', 'edited' );
+
+
+add_filter( 'edited', 'customize_font_stacks' );
 if ( ! function_exists( 'twentyfifteen_fonts_url' ) ) :
 /**
  * Register Google fonts for Twenty Fifteen.
@@ -227,17 +234,6 @@ function twentyfifteen_fonts_url() {
 	return $fonts_url;
 }
 endif;
-/**
- * JavaScript Detection.
- *
- * Adds a `js` class to the root `<html>` element when JavaScript is detected.
- *
- * @since Twenty Fifteen 1.1
- */
-function twentyfifteen_javascript_detection() {
-	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
-}
-add_action( 'wp_head', 'twentyfifteen_javascript_detection', 0 );
 /**
  * Enqueue scripts and styles.
  *
