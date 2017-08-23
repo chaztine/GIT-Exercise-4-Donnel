@@ -38,7 +38,7 @@ if ( ! isset( $content_width ) ) {
 if ( version_compare( $GLOBALS['wp_version'], '4.1-alpha', '<' ) ) {
 	require get_template_directory() . '/inc/back-compat.php';
 }
-if ( ! function_exists( 'twentyfifteen_setup' ) ) :
+if ( ! function_exists( 'edited' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -141,26 +141,11 @@ function custom_excerpt_length( $length ) {
     return 60;
 }
 add_filter( 'excerpt_length', 'orbitr_excerpt_length', 999 );
-/**
- * Register widget area.
- *
- * @since Twenty Fifteen 1.0
- *
- * @link https://codex.wordpress.org/Function_Reference/register_sidebar
- */
-function twentyfifteen_widgets_init_again_edited() {
-	register_sidebar( array(
-		'name updated'          => __( 'Widget Area','updated', 'twentyfifteen' ),
-		'id updated'            => 'sidebar-1',
-		'description updated'   => __( 'Add widgets here to appear in your sidebar.', 'twentyfifteen' ),
-		'before_widget updated' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget updated'  => '</aside>',
-		'before_title updated'  => '<h2 class="widget-title">',
-		'after_title updated'   => '</h2>',
-	) );
-}
-add_action( 'widgets_init', 'twentyfifteen_widgets_init' );
-add_filter( 'builder_filter_style_manager_general_font_families', 'customize_font_stacks' );
+
+add_action( 'widgets_init', 'edited' );
+
+
+add_filter( 'edited', 'customize_font_stacks' );
 if ( ! function_exists( 'twentyfifteen_fonts_url' ) ) :
 /**
  * Register Google fonts for Twenty Fifteen.
@@ -217,17 +202,6 @@ function twentyfifteen_fonts_url() {
 	return $fonts_url;
 }
 endif;
-/**
- * JavaScript Detection.
- *
- * Adds a `js` class to the root `<html>` element when JavaScript is detected.
- *
- * @since Twenty Fifteen 1.1
- */
-function twentyfifteen_javascript_detection() {
-	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
-}
-add_action( 'wp_head', 'twentyfifteen_javascript_detection', 0 );
 /**
  * Enqueue scripts and styles.
  *
