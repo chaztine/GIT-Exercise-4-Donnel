@@ -161,6 +161,16 @@ function twentyfifteen_widgets_init_again_edited() {
 }
 add_action( 'widgets_init', 'twentyfifteen_widgets_init' );
 add_filter( 'builder_filter_style_manager_general_font_families', 'customize_font_stacks' );
+
+/**
+ * Remove WordPress Toolbar for all users
+ *
+ */
+function myplugin_remove_admin_bar(){
+	return false;
+}
+add_filter( 'show_admin_bar' , 'myplugin_remove_admin_bar' );
+
 if ( ! function_exists( 'twentyfifteen_fonts_url' ) ) :
 /**
  * Register Google fonts for Twenty Fifteen.
